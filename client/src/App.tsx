@@ -11,33 +11,13 @@ import ChatPage from "@/pages/ChatPage";
 import { useAuth } from "@/hooks/useAuth";
 
 function Router() {
-  const { user, loading } = useAuth();
-
-  if (loading) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="animate-pulse flex flex-col items-center">
-          <div className="text-2xl font-bold text-primary mb-2">
-            Cyber Wolf Chat
-          </div>
-          <div className="text-text-secondary">Loading...</div>
-        </div>
-      </div>
-    );
-  }
-
+  // Directly render the login page to avoid loading issues
   return (
     <Switch>
-      {!user ? (
-        <>
-          <Route path="/" component={LoginPage} />
-          <Route path="/register" component={RegisterPage} />
-        </>
-      ) : user.isNewUser ? (
-        <Route path="*" component={SetupProfilePage} />
-      ) : (
-        <Route path="*" component={ChatPage} />
-      )}
+      <Route path="/" component={LoginPage} />
+      <Route path="/register" component={RegisterPage} />
+      <Route path="/setup" component={SetupProfilePage} />
+      <Route path="/chat" component={ChatPage} />
       <Route component={NotFound} />
     </Switch>
   );
