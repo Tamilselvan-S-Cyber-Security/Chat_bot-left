@@ -23,7 +23,7 @@ type FormValues = z.infer<typeof formSchema>;
 
 export function LoginForm() {
   const [isLoading, setIsLoading] = useState(false);
-  const { login } = useAuth();
+  const { login, loginWithGoogle } = useAuth();
   const { toast } = useToast();
   const [_, setLocation] = useLocation();
 
@@ -140,11 +140,17 @@ export function LoginForm() {
             type="button"
             className="ripple w-full py-3 px-4 glass-dark border border-secondary hover:bg-opacity-20 font-medium rounded-lg flex items-center justify-center"
             disabled={isLoading}
-            onClick={() => {
-              toast({
-                title: "Google Sign-in",
-                description: "Google authentication is ready for integration."
-              });
+            onClick={async () => {
+              setIsLoading(true);
+              try {
+                await loginWithGoogle();
+                // Redirect will happen automatically via the Router in App.tsx
+              } catch (error) {
+                // Error is already handled in the auth context
+                console.error(error);
+              } finally {
+                setIsLoading(false);
+              }
             }}
           >
             <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google" className="w-5 h-5 mr-2" />

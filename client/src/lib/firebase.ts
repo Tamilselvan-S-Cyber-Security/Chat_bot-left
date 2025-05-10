@@ -31,16 +31,14 @@ import {
 } from "firebase/storage";
 import { getAnalytics } from "firebase/analytics";
 
-// Firebase configuration with direct values from user config
+// Firebase configuration from environment variables
 const firebaseConfig = {
-  apiKey: "AIzaSyDFckKbku4PHboTpRyxrS47fVDE6Nu3x9w",
-  authDomain: "cyber-chat-tamilselvan.firebaseapp.com",
-  databaseURL: "https://cyber-chat-tamilselvan-default-rtdb.asia-southeast1.firebasedatabase.app",
-  projectId: "cyber-chat-tamilselvan",
-  storageBucket: "cyber-chat-tamilselvan.firebasestorage.app",
-  messagingSenderId: "907806055838",
-  appId: "1:907806055838:web:e4a293b5186d33b4178a8f",
-  measurementId: "G-4LQZB9Y778"
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
+  authDomain: `${import.meta.env.VITE_FIREBASE_PROJECT_ID}.firebaseapp.com`,
+  databaseURL: `https://${import.meta.env.VITE_FIREBASE_PROJECT_ID}-default-rtdb.asia-southeast1.firebasedatabase.app`,
+  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
+  storageBucket: `${import.meta.env.VITE_FIREBASE_PROJECT_ID}.appspot.com`,
+  appId: import.meta.env.VITE_FIREBASE_APP_ID
 };
 
 // Initialize Firebase

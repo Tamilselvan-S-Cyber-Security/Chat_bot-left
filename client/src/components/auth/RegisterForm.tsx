@@ -9,6 +9,7 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/hooks/use-toast';
+import { Separator } from '@/components/ui/separator';
 
 // Define form schema
 const formSchema = z.object({
@@ -24,7 +25,7 @@ type FormValues = z.infer<typeof formSchema>;
 
 export function RegisterForm() {
   const [isLoading, setIsLoading] = useState(false);
-  const { register } = useAuth();
+  const { register, loginWithGoogle } = useAuth();
   const { toast } = useToast();
   const [_, setLocation] = useLocation();
 

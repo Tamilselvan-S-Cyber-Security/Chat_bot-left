@@ -262,7 +262,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       await set(userRef, {
         status,
         lastActiveAt: new Date().toISOString(),
-      }, { merge: true });
+      });
       
       // Update local user state
       setUser(prevUser => {
@@ -285,6 +285,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         loading,
         register,
         login,
+        loginWithGoogle,
         logout,
         setupProfile,
         updateUserStatus
