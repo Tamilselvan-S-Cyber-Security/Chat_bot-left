@@ -10,7 +10,9 @@ import {
   db,
   ref,
   get,
-  set
+  set,
+  GoogleAuthProvider,
+  signInWithPopup
 } from "@/lib/firebase";
 import { useToast } from "@/hooks/use-toast";
 
@@ -29,6 +31,7 @@ interface AuthContextType {
   loading: boolean;
   register: (email: string, password: string) => Promise<void>;
   login: (email: string, password: string) => Promise<void>;
+  loginWithGoogle: () => Promise<void>;
   logout: () => Promise<void>;
   setupProfile: (displayName: string, photoURL: string | null, about: string) => Promise<void>;
   updateUserStatus: (status: 'online' | 'away' | 'offline') => Promise<void>;
@@ -40,6 +43,7 @@ export const AuthContext = createContext<AuthContextType>({
   loading: true,
   register: async () => {},
   login: async () => {},
+  loginWithGoogle: async () => {},
   logout: async () => {},
   setupProfile: async () => {},
   updateUserStatus: async () => {}
@@ -133,6 +137,41 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     } catch (error: any) {
       toast({
         title: "Login failed",
+        description: error.message,
+        variant: "destructive",
+      });
+      throw error;
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Login with Google
+  const loginWithGoogle = async () => {
+    try {
+      setLoading(true);
+      const provider = new GoogleAuthProvider();
+      const result = await signInWithPopup(auth, provider);
+      
+      // Check if user exists in our database
+      const userSnapshot = await get(ref(db, `users/${result.user.uid}`));
+      
+      if (!userSnapshot.exists()) {
+        // First time Google login, mark as new user
+        setUser({ 
+          ...result.user,
+          isNewUser: true 
+        } as User);
+      } else {
+        // Existing user
+        toast({
+          title: "Welcome back",
+          description: "You've successfully logged in with Google",
+        });
+      }
+    } catch (error: any) {
+      toast({
+        title: "Google login failed",
         description: error.message,
         variant: "destructive",
       });

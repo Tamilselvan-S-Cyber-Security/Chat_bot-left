@@ -6,6 +6,8 @@ import {
   signOut as firebaseSignOut,
   onAuthStateChanged,
   updateProfile,
+  GoogleAuthProvider,
+  signInWithPopup,
   type User as FirebaseUser
 } from "firebase/auth";
 import { 
@@ -18,7 +20,8 @@ import {
   query, 
   orderByChild,
   serverTimestamp,
-  update
+  update,
+  connectDatabaseEmulator
 } from "firebase/database";
 import { 
   getStorage, 
@@ -55,6 +58,8 @@ export {
   analytics,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
+  GoogleAuthProvider,
+  signInWithPopup,
   firebaseSignOut,
   onAuthStateChanged,
   updateProfile,

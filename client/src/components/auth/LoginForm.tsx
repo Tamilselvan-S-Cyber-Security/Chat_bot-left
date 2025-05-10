@@ -10,6 +10,7 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
 import { useToast } from '@/hooks/use-toast';
+import { Separator } from '@/components/ui/separator';
 
 // Define form schema
 const formSchema = z.object({
@@ -128,6 +129,26 @@ export function LoginForm() {
             disabled={isLoading}
           >
             {isLoading ? 'Signing in...' : 'Sign In'}
+          </Button>
+          
+          <div className="relative my-6">
+            <Separator className="my-4" />
+            <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-background px-2 text-muted-foreground text-sm">or continue with</div>
+          </div>
+          
+          <Button
+            type="button"
+            className="ripple w-full py-3 px-4 glass-dark border border-secondary hover:bg-opacity-20 font-medium rounded-lg flex items-center justify-center"
+            disabled={isLoading}
+            onClick={() => {
+              toast({
+                title: "Google Sign-in",
+                description: "Google authentication is ready for integration."
+              });
+            }}
+          >
+            <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google" className="w-5 h-5 mr-2" />
+            Sign in with Google
           </Button>
           
           <p className="text-center text-text-secondary">
