@@ -85,6 +85,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   // Listen for auth state changes
   useEffect(() => {
+    // Make sure we don't get stuck in loading state
+    const timeoutId = setTimeout(() => {
+      setLoading(false);
+    }, 3000);
+    
     const unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
       if (firebaseUser) {
         const extendedUser = await checkUserProfile(firebaseUser);
@@ -93,10 +98,14 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         setUser(null);
       }
       setLoading(false);
+      clearTimeout(timeoutId);
     });
 
     // Cleanup subscription
-    return () => unsubscribe();
+    return () => {
+      unsubscribe();
+      clearTimeout(timeoutId);
+    };
   }, []);
 
   // Register a new user
