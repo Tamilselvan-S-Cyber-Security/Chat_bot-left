@@ -37,7 +37,7 @@ const firebaseConfig = {
   authDomain: `${import.meta.env.VITE_FIREBASE_PROJECT_ID}.firebaseapp.com`,
   databaseURL: `https://${import.meta.env.VITE_FIREBASE_PROJECT_ID}-default-rtdb.asia-southeast1.firebasedatabase.app`,
   projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
-  storageBucket: `${import.meta.env.VITE_FIREBASE_PROJECT_ID}.appspot.com`,
+  storageBucket: `${import.meta.env.VITE_FIREBASE_PROJECT_ID}.firebasestorage.app`,
   appId: import.meta.env.VITE_FIREBASE_APP_ID
 };
 
@@ -46,7 +46,8 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getDatabase(app);
 const storage = getStorage(app);
-const analytics = getAnalytics(app);
+// Skip analytics for now
+const analytics = null;
 
 export { 
   app, 
