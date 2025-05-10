@@ -3,13 +3,11 @@ import App from "./App";
 import "./index.css";
 import { AuthProvider } from "./context/AuthContext";
 import { ChatProvider } from "./context/ChatContext";
-import { Toaster } from "@/components/ui/toaster";
 
 createRoot(document.getElementById("root")!).render(
   <AuthProvider>
     <ChatProvider>
       <App />
-      <Toaster />
     </ChatProvider>
   </AuthProvider>
 );
